@@ -1,0 +1,46 @@
+version: '3.1'
+services:
+  apipecas-db:
+    container_name: apipecas_db
+    image: postgres
+    environment:
+      POSTGRES_DB: 'dbapipecas'
+      POSTGRES_PASSWORD: 'Mec_2022'
+      POSTGRES_USER: 'dbapipecas'
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./db/api-pecas/pgdata:/var/lib/postgresql
+    networks:
+      - apipecas
+
+  apipecas-api:
+    container_name: apipecas_api
+    build:
+      context: ../api-pecas
+      dockerfile: Dockerfile
+    ports:
+      - 7080:80
+    environment:
+      APP_ENV: 'local'
+      APP_DEBUG: 'true'
+      APP_URL: 'http://localhost:7080'
+      DATABASE_DRIVER: 'pdo_pgsql'
+      DATABASE_HOST: apipecas_db
+      DATABASE_PORT: '5432'
+      DATABASE_NAME: 'dbapipecas'
+      DATABASE_USER: 'dbapipecas'
+      DATABASE_PASSWORD: 'Mec_2022' 
+      restart: always
+    volumes:
+      - ../api-pecas:/var/www/html
+  #  command: >
+   #   sh -c "composer install && apache2-foreground && php artisan migrate --seed"
+  
+    depends_on:
+      - apipecas-db
+    networks:
+      - apipecas
+networks:
+  apipecas:
+    driver: bridge
