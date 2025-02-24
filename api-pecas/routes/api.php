@@ -15,12 +15,17 @@ use App\Http\Controllers\Api\PecasController;
 */
 
 Route::get('/', function(){
-    return 'Laravel: '.app()->version().' / App: '.config('app.version');
+    return 'Laravel: '.app()->version().' / App: Teste Brabo'.config('app.version');
 });
 
 
-Route::group(['prefix' => 'pecas'], function () {
-       Route::post("/consultar-pecas", [PecasController::class, 'consultarPecas'])->name("pecas.consultar-pecas");
-    
-});
+
+
+Route::group([], function () {
+        Route::post("/cadastrar-peca", [PecasController::class, 'cadastrarPeca'])->name("pecas.cadastrar-peca");
+        Route::get("/consultar-peca/{co_peca}", [PecasController::class, 'consultarPeca'])->name("pecas.consultar-peca");
+        Route::put("/atualiza/{co_peca}", [PecasController::class, 'atualizaPeca'])->name("pecas.atualiza-peca");
+        Route::delete("/deleta/{co_peca}", [PecasController::class, 'deletaPeca'])->name("pecas.deleta-peca");
+    });
+
 
