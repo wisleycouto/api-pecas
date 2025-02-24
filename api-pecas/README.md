@@ -67,7 +67,7 @@ http://localhost:8083/
 * Frontend
 http://localhost/
 
-# Observações
+# Observações 
 
 Favor não alterar os arquivos de Configuração  dockerfile e docker-compose e chart, se necessário comunicar equipe da arquitetura da CGS.
 
