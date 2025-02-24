@@ -13,7 +13,7 @@ class Pecas extends Migration
     public function up(): void
     {
         Schema::create($this->table, function (Blueprint $table) {
-            $table->int('co_peca')->primary();
+            $table->Integer('co_peca')->primary();
             $table->string('nome_peca');
             $table->string('descricao_peca');
             $table->Integer('disponibilidade_peca');
