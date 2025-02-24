@@ -47,7 +47,7 @@ Para ambientes de desenvolvimento,  deverá obrigatoriamente utilizar o docker p
 
 --docker-compose exec apipecas_api sh -c "php artisan key:generate"
 
---docker-compose exec apipecas_api sh -c "php artisan migrate"
+--docker-compose exec apipecas_api sh -c "php artisan migrate" 
 
 --docker-compose exec apipecas_api sh -c "php artisan db:seed"
 
