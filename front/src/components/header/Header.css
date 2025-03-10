@@ -1,0 +1,45 @@
+.header {
+
+    display: flex;
+    justify-content: space-between;
+    background-color: #222;
+    padding: 1em ;
+   
+
+}
+
+.header img {
+
+    padding-left: 40px;
+    width: 20%;
+
+
+}
+
+
+.list {
+
+    display: flex;
+    list-style: none;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: x-large;
+
+
+}
+
+.item  {
+
+    margin-right: 3em;
+
+}
+
+.item a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.item a:hover {
+    color: blue;
+   
+}
