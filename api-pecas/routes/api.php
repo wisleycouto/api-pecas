@@ -11,6 +11,9 @@ use App\Http\Controllers\UserController;
 Route::group(['prefix' => 'user'], function () {
     Route::post('/register', [UserController::class, 'register']);
     Route::post('/login', [UserController::class, 'login']);
+    Route::put('/att/{co_user}', [UserController::class, 'atualizaUser']);
+    Route::delete('/delete/{co_user}', [UserController::class, 'deleteUser']);
+
 });
 
 

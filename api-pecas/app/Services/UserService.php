@@ -49,4 +49,44 @@ class UserService
 
         return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
     }
+
+
+    public function atualizaUser(array $data, $co_user)
+    {
+
+        $user = User::find($co_user);
+        if (!$user){
+            throw new \Exception('Usuario não encontrado', 400);
+
+        }
+        $user->fill($data);
+        if (isset($data['password'])){
+            $user->password = Hash::make($data['password']);
+        }
+        $user->save();
+        return $user;
+
+    }
+
+
+    public function deleteUser($co_user)
+    {
+
+        $user = User::find($co_user);
+        if (!$user) {
+            throw new \Exception('Usuario nao tem em nenhum lugar!!', 400);
+
+        }
+
+        $user->delete();
+        return true;
+
+    }
+
+
+
+
+
+
+
 }

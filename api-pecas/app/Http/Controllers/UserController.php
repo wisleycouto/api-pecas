@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Services\UserService;
 
@@ -41,62 +42,109 @@ class UserController extends Controller
 
      } 
 
-     //Não Tá funcionando Legal 
-     public function login($id, $name, $email) 
+
+     public function login(Request $request) 
      {
-         $user = User::find($id||$name||$email);
-            if($user){
-                return response()->json($user);
-            } else {
+         $credentials = $request->only('email', 'password');
+     
+         if (Auth::attempt($credentials)) {
+             $user = Auth::user();
+             $token = $user->createToken('authToken')->accessToken;
+     
+             return response()->json([
+                 'success' => true,
+                 'message' => 'Login realizado com sucesso!!!',
+                 'data' => [
+                     'user' => $user,
+                     'token' => $token
+                 ]
+             ]);
+         } else {
+             return response()->json([
+                 'success' => false,
+                 'message' => 'Credenciais inválidas'
+             ], 400);
+         }
+     }
 
-             return response()->json (['message' => 'Usuario não encontrado'],400);
 
-            }   
-
-        }
-
-    // Falta Fazer o service 
-    public function atualizeUser(Request $request, $co_user)
-    {
+     public function atualizaUser(Request $request, $co_user)
+     {
         try {
-            $user= $this->userService->atualizeUser($request->all(), $co_user);
+
+            $user = $this->userService->atualizaUser($request->all(),$co_user);
 
                 return response()->json([
                     'success' => true,
-                    'message' => 'Usuario Atualizado com sucesso!!!',
+                    'message' => 'O usuario foi atualizado com sucesso!!!',
                     'data' => $user
+
 
                 ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Erro ao atualizar',
-                'error' => utf8_encode($e->getMessage())
-            ], $e->getCode() ?: 400);
-        }
-    }
 
-    // Falta Fazer o service 
-    public function deleteUser($co_user)
-    {
-        $user = User::find($co_user);
-        if ($user){
-            $user->delete();
-            return response()->json([
-                'success' => true,
-                'message' => 'Usuario deletado com sucesso !!!!'
-            ]);
+        return response()-json([
+            'success' => false,
+            'message' => 'Erro na atualização',
+            'error' => utf8_encode($e->getMessage())],
+            $e->getCode() ?: 400);
 
-        } else {
-
-            return response()->json(['message' => 'Usuario não encontrado']. 400);
-
+          }
         }
 
-    }
 
-}  
+        public function deleteUser($co_user)
+        {
+            try {
+                $this->userService->deleteUser($co_user);
+        
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Usurio deletado com sucesso!'
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Deu ruim ',
+                    'error' => utf8_encode($e->getMessage())
+                ], $e->getCode() ?: 400);
+            }
+        } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
 
             
 
