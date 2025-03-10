@@ -3,91 +3,50 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserService
 {
-    /**
-     * Encontra um usuário pelo CPF ou cria um novo com os dados fornecidos
-     *
-     * @param array $data
-     * @return User|null
-     */
-
-    public function findOrCreateUser(array $data): ?User
+    public function register(array $data)
     {
+        $validator = Validator::make($data, [
+            'nome' => 'required|string|max:255',
+            'nome_empresarial' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:tb_users',
+            'telefone' => 'required|string|max:20|unique:tb_users',
+            'imagem' => 'nullable|string',
+            'password' => 'required|string|min:8',
+        ]);
 
-       
-        $user = User::firstOrCreate(
-            ['nu_cpf' => $data['sub']],
-            [
-                'no_usuario' => $data['name'],
-                'ds_email_gov_br' => $data['email'] ?? null,
-                'ds_email_ldap' => $data['ds_email_ldap'] ?? null
-            ]
-        );
-
-        if (!$user) {
-            throw new \Exception("Não foi possivel criar ou encontrar o usuário.");
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
         }
 
-        return $user;
+        $user = User::create([
+            'nome' => $data['nome'],
+            'nome_empresarial' => $data['nome_empresarial'],
+            'email' => $data['email'],
+            'telefone' => $data['telefone'],
+            'imagem' => $data['imagem'],
+            'password' => Hash::make($data['password']),
+        ]);
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
     }
 
-    public function findOrCreateUserLdap($data): ?User
+    public function login(array $data)
     {
-
-     
-        $user = User::firstOrCreate(
-            ['nu_cpf' => $data['cpf']],
-            [
-                'no_usuario' => $data['nome'],
-                'ds_email_gov_br' =>  null,
-                'ds_email_ldap' => $data['email'] ?? null
-            ]
-        );
-
-        if (!$user) {
-            throw new \Exception("Não foi possivel criar ou encontrar o usuário.");
+        if (!auth()->attempt($data->only('email', 'password'))) {
+            return response()->json(['message' => 'Credenciais inválidas'], 401);
         }
 
-        return $user;
+        $user = User::where('email', $data['email'])->firstOrFail();
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
     }
-
-    public function findByUser(string $identificador)
-    {
-        if ($this->isCpf($identificador)) {
-            return $this->findByCpf($identificador);
-        }
-
-        return $this->findById($identificador);
-    }
-
-    public function findById($id)
-    {
-        $usuario = User::find($id);
-
-        if (!$usuario) {
-            throw new ModelNotFoundException('Usuário não encontrado');
-        }
-
-        return $usuario;
-    }
-
-    public function findByCpf(string $cpf)
-    {
-        $usuario = User::where('nu_cpf', $cpf)->first();
-
-        if (!$usuario) {
-            throw new ModelNotFoundException('Usuário não encontrado');
-        }
-
-        return $usuario;
-    }
-
-    private function isCpf($identificador)
-    {
-        return strlen($identificador) === 11;
-    }
-
 }

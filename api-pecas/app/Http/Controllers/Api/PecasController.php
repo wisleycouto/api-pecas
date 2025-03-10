@@ -23,7 +23,7 @@ class PecasController extends Controller
     {
         try {
             $peca = $this->pecasService->cadastrarPeca($request->all());
-
+    
             return response()->json([
                 'success' => true,
                 'message' => 'Peça cadastrada com sucesso!!!',
@@ -33,7 +33,7 @@ class PecasController extends Controller
             return response()->json([
                 'success' => false,
                 'error' => utf8_encode($e->getMessage())
-            ], $e->getCode() ?: 400);
+            ], 400); 
         }
     }
 

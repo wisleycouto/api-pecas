@@ -13,22 +13,23 @@ class Pecas extends Migration
     public function up(): void
     {
         Schema::create($this->table, function (Blueprint $table) {
-            $table->Integer('co_peca')->primary();
+            $table->increments('co_peca'); 
             $table->string('nome_peca');
             $table->string('descricao_peca');
-            $table->Integer('disponibilidade_peca');
-            $table->Integer('preco_peca');
+            $table->integer('disponibilidade_peca');
+            $table->integer('preco_peca');
             $table->string('co_fabricante');
-            $table->string('imposto')->nullable()->default(NULL);;
-            $table->string(column: 'imagem')->nullable()->default(NULL);;
+            $table->integer('imposto')->nullable()->default(NULL);
+            $table->string('imagem')->nullable()->default(NULL);
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     */ public function down()
+     */
+    public function down(): void
     {
-        Schema::drop($this->table);
+        Schema::dropIfExists($this->table);
     }
-};
+}

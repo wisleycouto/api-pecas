@@ -42,13 +42,7 @@ class PecasService
             throw new \Exception('Peça não encontrada', 404);
         }
     }
+}
 
 
-
-
-
-
-    }
-
- 
 

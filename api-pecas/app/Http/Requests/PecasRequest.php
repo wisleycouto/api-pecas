@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Exceptions.HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 
@@ -51,6 +51,7 @@ class PecasRequest extends FormRequest
                 'nome_peca' => ['bail', 'string', 'required', 'max:100'],
                 'descricao_peca' => ['bail', 'string', 'required', 'max:255'],
                 'preco_peca' => ['bail', 'required', 'numeric'],
+                'co_peca' => ['bail', 'required', 'numeric', 'unique:tb_pecas,co_peca'],
             ];
         }
     }
