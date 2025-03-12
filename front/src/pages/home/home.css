@@ -1,62 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+html, body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0px;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+
+.home{
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: flex-start;
+}
 .home_container {
 
-    width: 100%;
+    display: block;
+    justify-content: flex-end;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height:90vh;
+    width: 20%;
+    background-color: white;
+    padding: 20px;
+    margin: 15px;
+
+}
+
+.home_left{
+    display: block;
+    justify-content: flex-start;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    height: 20px;
+    width: 60%;
+    margin: 15px;
+    padding: 50px;
+
+}
+.home_left h1
+{
+    font-size:50px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+
+.logado{
     display: flex;
-    flex-direction: column; 
-    align-items: center;
-    justify-content: center;
-    padding: 4em;
-
+    justify-content: left;
+    padding-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 5%;
+    width: 90%;
+    background-color: rgb(214, 19, 19);
+  
 }
 
 
-.home_container h1 {
-
-    font-size: 2.5em;
-    margin-bottom: .5em;
-
-
+.stock{
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 5%;
+    width: 90%;
+    background-color: rgb(19, 136, 214);
 }
 
-
-.home_container h1 span{
-
-    color: blue;
-    padding: 0 .2em;
-
-    background-color: black;
-
-
-}
-
-
-.home_container p {
-
-    margin-bottom: 1.5em;
-    color: #7b7b7b;
-    padding-bottom: 100px;
-
-}
-
-
-.home_container img {
-
-    width: 350px;
-    margin: 2em 0;
-
-
-}
-
-
-
-.products_container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 35px;
-}
-
-.product {
-  flex: 1 1 calc(10% - 30px);
-  box-sizing: border-box;
-}

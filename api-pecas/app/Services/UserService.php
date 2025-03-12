@@ -12,9 +12,9 @@ class UserService
     {
         $validator = Validator::make($data, [
             'nome' => 'required|string|max:255',
-            'nome_empresarial' => 'required|string|max:255',
+            'nome_empresarial' => 'nullable|string|max:255',
             'email' => 'required|string|email|max:255|unique:tb_users',
-            'telefone' => 'required|string|max:20|unique:tb_users',
+            'telefone' => 'nullable|string|max:20|unique:tb_users',
             'imagem' => 'nullable|string',
             'password' => 'required|string|min:8',
         ]);
