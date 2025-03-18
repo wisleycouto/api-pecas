@@ -34,9 +34,22 @@ services:
       restart: always
     volumes:
       - ../api-pecas:/var/www/html
-  #  command: >
-   #   sh -c "composer install && apache2-foreground && php artisan migrate --seed"
+    command: >
+      sh -c "composer install && apache2-foreground && php artisan migrate --seed"
   
+  pecas-frontend:      
+    container_name: pecas_frontend
+    build:
+      context: ../pecas-front
+      dockerfile: Dockerfile
+    environment:
+      VITE_BASE_URL_BACKEND: http://localhost:7080/api        
+    ports:
+      - 5173:5173
+    volumes:
+      - ../pecas-front:/app        
+    command: > 
+      sh -c "npm config fix && npm install && npm run dev"
     depends_on:
       - apipecas-db
     networks:

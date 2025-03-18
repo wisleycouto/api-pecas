@@ -1,0 +1,18 @@
+.product {
+    border: 1px solid #ccc;
+    border-radius: 2%;
+    padding: 20px;
+    width: 100%; 
+    text-align: left;
+    box-sizing: border-box;
+  }
+  
+  .product-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .product-price {
+    font-weight: bold;
+    color: #333;
+  }

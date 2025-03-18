@@ -4,22 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Pecas extends Migration
+class Usuario extends Migration
 {
     /**
      * Run the migrations.
      */
-    public $table = 'tb_pecas';
+    public $table = 'tb_usuario';
     public function up(): void
     {
         Schema::create($this->table, function (Blueprint $table) {
-            $table->increments('co_peca');
-            $table->string('nome_peca');
-            $table->string('descricao_peca');
-            $table->Integer('disponibilidade_peca');
-            $table->Integer('preco_peca');
-            $table->string('co_fabricante')->unique(); // Corrigido para ser único e não permitir NULL
-            $table->string('imposto')->nullable()->default(NULL);;
+            $table->increments('co_usuario');
+            $table->string('nome');
+            $table->string('nome_empresarial');
+            $table->string('email')->unique();
+            $table->string('telefone')->unique();
             $table->string(column: 'imagem')->nullable()->default(NULL);;
             $table->timestamps();
         });

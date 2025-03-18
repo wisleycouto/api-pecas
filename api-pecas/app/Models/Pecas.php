@@ -14,6 +14,7 @@ class Pecas extends Model
 
 
     protected $fillable = [
+        'co_peca',
         'nome_peca',
         'descricao_peca',
         'disponibilidade_peca',
