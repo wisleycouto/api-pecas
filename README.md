@@ -41,21 +41,21 @@ Para ambientes de desenvolvimento,  deverá obrigatoriamente utilizar o docker p
 
 #Configurando o Backend da aplicação
 
---docker-compose exec apipecas_api sh -c "composer install"
+--docker-compose exec apipecas-api sh -c "composer install"
 
---docker-compose exec apipecas_api sh -c "cp .env.example .env"
+--docker-compose exec apipecas-api sh -c "cp .env.example .env"
 
---docker-compose exec apipecas_api sh -c "php artisan key:generate"
+--docker-compose exec apipecas-api sh -c "php artisan key:generate"
 
---docker-compose exec apipecas_api sh -c "php artisan migrate"
+--docker-compose exec apipecas-api sh -c "php artisan migrate"
 
---docker-compose exec apipecas_api sh -c "php artisan db:seed"
+--docker-compose exec apipecas-api sh -c "php artisan db:seed"
 
---docker-compose exec apipecas_api sh -c "php artisan passport:install"
+--docker-compose exec apipecas-api sh -c "php artisan passport:install"
 
---docker-compose exec apipecas_api sh -c "php artisan vendor:publish --provider='LdapRecord\Laravel\LdapServiceProvider'"
+--docker-compose exec apipecas-api sh -c "php artisan vendor:publish --provider='LdapRecord\Laravel\LdapServiceProvider'"
 
-
+ 
 git config --global http.sslverify false
 
 ```

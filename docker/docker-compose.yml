@@ -26,7 +26,7 @@ services:
       APP_DEBUG: 'true'
       APP_URL: 'http://localhost:7080'
       DATABASE_DRIVER: 'pdo_pgsql'
-      DATABASE_HOST: apipecas_db
+      DATABASE_HOST: 'apipecas-db'
       DATABASE_PORT: '5432'
       DATABASE_NAME: 'dbapipecas'
       DATABASE_USER: 'dbapipecas'
@@ -34,9 +34,13 @@ services:
       restart: always
     volumes:
       - ../api-pecas:/var/www/html
+    depends_on:
+      - apipecas-db   
     command: >
       sh -c "composer install && apache2-foreground && php artisan migrate --seed"
-  
+    networks:
+      - apipecas 
+
   pecas-frontend:      
     container_name: pecas_frontend
     build:
